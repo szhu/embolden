@@ -6,6 +6,9 @@ def main():
     prefix = '  '
     for line in stdin:
         line = line.rstrip('\n')
+        if line.startswith('\\'):
+            print line
+            continue
         tabsize = (len(line) - len(line.lstrip())) * 0.75
         for word in ('define,if,else,accept,reject,return,loop forever,repeat,fork,for,:='.split(',')):
             pattern = r'\b%s\b' % word
