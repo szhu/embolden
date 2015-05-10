@@ -1,13 +1,20 @@
 #!/usr/bin/env python
 
+SAMELINE = '   '
+NEWLINE = '\\\\ '
+
 def main():
     from sys import stdin
     from re import sub
-    prefix = '  '
+    prefix = SAMELINE
     for line in stdin:
         line = line.rstrip('\n')
-        if line.startswith('\\'):
-            print line
+        if line == '\\hline':
+            print NEWLINE + line
+            prefix = SAMELINE
+            continue
+        elif line.startswith('\\'):
+            print SAMELINE + line
             continue
         tabsize = (len(line) - len(line.lstrip())) * 0.75
         for word in ('define,if,else,accept,reject,return,loop forever,repeat,fork,for,:='.split(',')):
@@ -17,7 +24,7 @@ def main():
                 word = ':='
             line = sub(pattern, '\\\\textbf{%s}' % word, line)
         print prefix + ('\hspace*{%.1fem} ' % tabsize) + line
-        prefix = '\\\\'
+        prefix = NEWLINE
 
     return 0
 
