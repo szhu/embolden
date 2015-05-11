@@ -1,2 +1,13 @@
 #!/usr/bin/env watchr
-watch(/.*\.in\.tex/) { system "make" }
+
+puts "== Hello, world!"
+
+watch('Makefile') do
+  cmd = [$0, ARGV[0]]
+  puts "== Reloading"
+  exec *cmd
+end
+
+watch(/.*\.in\.tex/) do
+  system 'make'
+end
